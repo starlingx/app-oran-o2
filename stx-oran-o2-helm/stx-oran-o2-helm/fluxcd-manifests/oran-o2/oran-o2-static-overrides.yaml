@@ -1,8 +1,12 @@
 #
-# Copyright (c) 2022 Wind River Systems, Inc.
+# Copyright (c) 2022-2023 Wind River Systems, Inc.
 #
 # SPDX-License-Identifier: Apache-2.0
 #
+
+# Ensure pods run on platform cores
+podLabels:
+  app.starlingx.io/component: platform
 
 # ImagePullSecrets for operator ServiceAccount, list of secrets in the same
 # namespace used to pull operator image. Must be set for any cluster configured
