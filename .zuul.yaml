@@ -5,11 +5,15 @@
         - openstack-tox-linters
         - k8sapp-oran-o2-tox-py39
         - k8sapp-oran-o2-tox-pylint
+        - k8sapp-oran-o2-tox-flake8
+        - k8sapp-oran-o2-tox-metadata
     gate:
       jobs:
         - openstack-tox-linters
         - k8sapp-oran-o2-tox-py39
         - k8sapp-oran-o2-tox-pylint
+        - k8sapp-oran-o2-tox-flake8
+        - k8sapp-oran-o2-tox-metadata
     post:
       jobs:
         - stx-app-oran-o2-upload-git-mirror
@@ -25,12 +29,33 @@
       - starlingx/fault
       - starlingx/update
       - starlingx/utilities
+      - starlingx/root
     files:
       - python3-k8sapp-oran-o2/*
     vars:
       tox_envlist: py39
       python_version: 3.9
       tox_extra_args: -c python3-k8sapp-oran-o2/k8sapp_oran_o2/tox.ini
+      tox_constraints_file: '{{ ansible_user_dir }}/src/opendev.org/starlingx/root/build-tools/requirements/debian/upper-constraints.txt'
+
+- job:
+    name: k8sapp-oran-o2-tox-metadata
+    parent: tox
+    description: |
+      Run metadata test for k8sapp-oran-o2
+    nodeset: debian-bullseye
+    required-projects:
+      - starlingx/config
+      - starlingx/fault
+      - starlingx/update
+      - starlingx/utilities
+      - starlingx/root
+    files:
+      - python3-k8sapp-oran-o2/*
+    vars:
+      tox_envlist: metadata
+      tox_extra_args: -c python3-k8sapp-oran-o2/k8sapp_oran_o2/tox.ini
+      tox_constraints_file: '{{ ansible_user_dir }}/src/opendev.org/starlingx/root/build-tools/requirements/debian/upper-constraints.txt'
 
 - job:
     name: k8sapp-oran-o2-tox-pylint
@@ -43,11 +68,32 @@
       - starlingx/fault
       - starlingx/update
       - starlingx/utilities
+      - starlingx/root
     files:
       - python3-k8sapp-oran-o2/*
     vars:
       tox_envlist: pylint
       tox_extra_args: -c python3-k8sapp-oran-o2/k8sapp_oran_o2/tox.ini
+      tox_constraints_file: '{{ ansible_user_dir }}/src/opendev.org/starlingx/root/build-tools/requirements/debian/upper-constraints.txt'
+
+- job:
+    name: k8sapp-oran-o2-tox-flake8
+    parent: tox
+    description: |
+      Run flake8 test for k8sapp-oran-o2
+    nodeset: debian-bullseye
+    required-projects:
+      - starlingx/config
+      - starlingx/fault
+      - starlingx/update
+      - starlingx/utilities
+      - starlingx/root
+    files:
+      - python3-k8sapp-oran-o2/*
+    vars:
+      tox_envlist: flake8
+      tox_extra_args: -c python3-k8sapp-oran-o2/k8sapp_oran_o2/tox.ini
+      tox_constraints_file: '{{ ansible_user_dir }}/src/opendev.org/starlingx/root/build-tools/requirements/debian/upper-constraints.txt'
 
 - job:
     name: stx-app-oran-o2-upload-git-mirror

@@ -9,6 +9,7 @@ from k8sapp_oran_o2.common import constants as app_constants
 from sysinv.common import exception
 from sysinv.helm import base
 
+
 class Orano2Helm(base.BaseHelm):
     """Class to encapsulate helm operations for the oran-o2 chart"""
 

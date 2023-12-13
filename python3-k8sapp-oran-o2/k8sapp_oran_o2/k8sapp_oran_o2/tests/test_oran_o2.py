@@ -16,4 +16,3 @@ class Orano2TestCase(test_plugins.K8SAppOrano2AppMixin,
         super(Orano2TestCase, self).setUp()
         self.app = dbutils.create_test_app(name='oran-o2')
         self.dbapi = dbapi.get_instance()
-
