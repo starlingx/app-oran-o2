@@ -1,6 +1,6 @@
 ---
 debname: stx-oran-o2-helm
-debver: 1.0-1
+debver: 1.1-0
 src_path: stx-oran-o2-helm
 dl_files:
   oran-o2-2.0.3_c209747.tar.gz:
