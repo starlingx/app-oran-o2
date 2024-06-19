@@ -3,3 +3,24 @@ application. Some charts are common across applications. These common charts
 reside in the stx-config/kubernetes/helm-charts directory. To include these in
 this application update the build_srpm.data file and use the COPY_LIST_TO_TAR
 mechanism to populate these common charts.
+
+Additional information
+----------------------
+
+By default this application will be affined to platform cores.
+If you wish to change this you must modify the
+app.starlingx.io/component label of the pods for this application
+by including it in your helm overrides values file.
+
+Example of modifying the app.starlingx.io/component label:
+
+```yaml
+---
+# values.yaml
+podLabels:
+  app.starlingx.io/component: application
+... # other values
+```
+
+Then apply these new values like so:
+$ system helm-override-update oran-o2 oran-o2 oran-o2 --values values.yaml
