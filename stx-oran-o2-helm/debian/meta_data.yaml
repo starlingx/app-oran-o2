@@ -1,12 +1,7 @@
 ---
 debname: stx-oran-o2-helm
-debver: 1.2-0
+debver: 1.2-1
 src_path: stx-oran-o2-helm
-dl_files:
-  oran-o2-2.0.4.tar.gz:
-    topdir: pti-o2-2.0.4
-    url: https://github.com/o-ran-sc/pti-o2/archive/585eb7242c683657997e8b5ab0ce01213086dcec.tar.gz
-    md5sum: 2483280a37e674059172e6f4510df50f
 revision:
   dist: $STX_DIST
   GITREVCOUNT:

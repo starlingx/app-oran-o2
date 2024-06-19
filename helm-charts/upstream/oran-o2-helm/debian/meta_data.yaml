@@ -1,0 +1,16 @@
+---
+debname: oran-o2-helm
+debver: 2.0.4-1
+src_path: oran-o2-helm
+src_files:
+  - oran-o2-helm/files/Makefile
+dl_files:
+  pti-o2.tgz:
+    topdir: pti-o2
+    url: https://github.com/o-ran-sc/pti-o2/archive/585eb7242c683657997e8b5ab0ce01213086dcec.tar.gz
+    md5sum: 2483280a37e674059172e6f4510df50f
+revision:
+  dist: $STX_DIST
+  GITREVCOUNT:
+    SRC_DIR: ${MY_REPO}/stx/app-oran-o2/helm-charts/upstream/oran-o2-helm
+    BASE_SRCREV: 49916455ef6c8d6fbee5293424a41c3d11d2eefb

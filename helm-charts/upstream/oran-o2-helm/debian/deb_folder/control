@@ -1,18 +1,15 @@
-Source: stx-oran-o2-helm
+Source: oran-o2-helm
 Section: libs
 Priority: optional
 Maintainer: StarlingX Developers <starlingx-discuss@lists.starlingx.io>
 Build-Depends: debhelper-compat (= 13),
- oran-o2-helm,
- python3-k8sapp-oran-o2,
- python3-k8sapp-oran-o2-wheels,
- build-info
+ helm
 Standards-Version: 4.5.1
 Homepage: https://www.starlingx.io
 
-Package: stx-oran-o2-helm
+Package: oran-o2-helm
 Section: libs
 Architecture: any
 Depends: ${misc:Depends}
 Description: StarlingX ORAN O2 FluxCD Helm Charts
- This package contains Fluxcd manifests for the ORAN O2.
+ This package contains Fluxcd helm charts for the ORAN O2.

@@ -1,0 +1,27 @@
+#!/usr/bin/make -f
+export DH_VERBOSE = 1
+
+export DEB_VERSION = $(shell dpkg-parsechangelog | egrep '^Version:' | cut -f 2 -d ' ')
+export PATCH_VERSION = $(shell echo $(DEB_VERSION) | cut -f 4 -d '.')
+export CHART_BASE_VERSION = $(shell echo $(DEB_VERSION) | sed 's/-/./' | cut -d '.' -f 1-3)
+export CHART_VERSION = v$(CHART_BASE_VERSION)+STX.$(PATCH_VERSION)
+
+export ROOT = debian/tmp
+export APP_FOLDER = $(ROOT)/usr/lib/helm
+
+%:
+	dh $@
+
+override_dh_auto_build:
+	mkdir -p oran-o2
+	# Extract oran-o2 chart
+	tar -C oran-o2 --strip-components 2 -xvf pti-o2.tgz pti-o2/charts
+	make CHART_VERSION=$(CHART_VERSION) oran-o2
+	ls -alR
+
+override_dh_auto_install:
+	# Install the app tar file.
+	install -d -m 755 $(APP_FOLDER)
+	install -p -D -m 755 oran-o2*.tgz $(APP_FOLDER)
+
+override_dh_auto_test:
