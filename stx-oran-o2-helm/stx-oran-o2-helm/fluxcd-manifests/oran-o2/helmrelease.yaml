@@ -1,5 +1,5 @@
 #
-# Copyright (c) 2022 Wind River Systems, Inc.
+# Copyright (c) 2022-2024 Wind River Systems, Inc.
 #
 # SPDX-License-Identifier: Apache-2.0
 #
@@ -15,7 +15,7 @@ spec:
   chart:
     spec:
       chart: oran-o2
-      version: 0.1.0
+      version: REPLACE_HELM_CHART_VERSION
       sourceRef:
         kind: HelmRepository
         name: stx-platform
