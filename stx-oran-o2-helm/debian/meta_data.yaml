@@ -1,6 +1,6 @@
 ---
 debname: stx-oran-o2-helm
-debver: 1.2-1
+debver: 1.2-2
 src_path: stx-oran-o2-helm
 revision:
   dist: $STX_DIST

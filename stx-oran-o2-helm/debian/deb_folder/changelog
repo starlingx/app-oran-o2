@@ -1,3 +1,9 @@
+stx-oran-o2-helm (1.2-2) unstable; urgency=medium
+
+  * Deployment strategy type update
+
+ --  Jon Zhang <rong.zhang@windriver.com>  Mon, 18 Nov 2024 09:40:00 +0000
+
 stx-oran-o2-helm (1.2-1) unstable; urgency=medium
 
   * Auto chart increment update
