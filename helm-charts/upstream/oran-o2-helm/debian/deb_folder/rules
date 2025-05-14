@@ -2,7 +2,7 @@
 export DH_VERBOSE = 1
 
 export DEB_VERSION = $(shell dpkg-parsechangelog | egrep '^Version:' | cut -f 2 -d ' ')
-export PATCH_VERSION = $(shell echo $(DEB_VERSION) | cut -f 4 -d '.')
+export PATCH_VERSION = $(shell echo $(DEB_VERSION) | cut -f 2 -d '-')
 export CHART_BASE_VERSION = $(shell echo $(DEB_VERSION) | sed 's/-/./' | cut -d '.' -f 1-3)
 export CHART_VERSION = v$(CHART_BASE_VERSION)+STX.$(PATCH_VERSION)
 
