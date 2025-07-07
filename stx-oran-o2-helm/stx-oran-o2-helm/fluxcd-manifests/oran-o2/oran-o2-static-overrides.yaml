@@ -1,6 +1,6 @@
 ---
 #
-# Copyright (c) 2022-2025 Wind River Systems, Inc.
+# Copyright (c) 2022-2024 Wind River Systems, Inc.
 #
 # SPDX-License-Identifier: Apache-2.0
 #
@@ -16,14 +16,14 @@ imagePullSecrets:
   - default-registry-key
 
 # For o2service, use the mirror image on docker.io instead of the original:
-# nexus3.o-ran-sc.org:10002/o-ran-sc/pti-o2imsdms:2.2.0
+# nexus3.o-ran-sc.org:10004/o-ran-sc/pti-o2imsdms:2.0.4
 # For postgres and redis, the images were selected with the
 # latest stable tag at the time being.
 o2ims:
   serviceaccountname: admin-oran-o2
   images:
     tags:
-      o2service: docker.io/oranscinf/pti-o2imsdms:2.2.0
+      o2service: docker.io/oranscinf/pti-o2imsdms:2.0.4
       postgres: docker.io/library/postgres:9.6
       redis: docker.io/library/redis:7.0.5-alpine3.16
     pullPolicy: IfNotPresent
