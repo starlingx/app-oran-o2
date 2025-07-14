@@ -1,3 +1,9 @@
+oran-o2-helm (2.2.0-1) unstable; urgency=medium
+
+  * Security Updates and IPV6 URL Updates
+
+ --  Vineela Pachchipulusu <Vineela.Pachchipulusu@windriver.com>  Mon, 9 Jul 2025 18:10:00 +0000
+
 oran-o2-helm (2.0.4-2) unstable; urgency=medium
 
   * Deployment strategy type update

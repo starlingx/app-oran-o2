@@ -12,6 +12,11 @@ supported_k8s_version:
 
 behavior:
   platform_managed_app: yes
-  evaluate_reapply:
-    after:
-      - platform-integ-apps
+
+dependent_apps:
+  - - name: platform-integ-apps
+      version: 25\.09-\d+
+      action: apply
+    - name: rook-ceph
+      version: 25\.09-\d+
+      action: apply
