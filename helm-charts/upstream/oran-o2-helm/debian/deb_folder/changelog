@@ -1,3 +1,9 @@
+oran-o2-helm (2.2.0-2) unstable; urgency=medium
+
+  * Updates on Region value and optional WRA conf
+
+ --  Vineela Pachchipulusu <Vineela.Pachchipulusu@windriver.com>  Tue, 15 Jul 2025 20:50:00 +0000
+
 oran-o2-helm (2.2.0-1) unstable; urgency=medium
 
   * Security Updates and IPV6 URL Updates
