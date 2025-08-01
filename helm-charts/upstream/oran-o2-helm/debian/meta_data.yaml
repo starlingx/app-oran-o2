@@ -1,14 +1,14 @@
 ---
 debname: oran-o2-helm
-debver: 2.2.0-1
+debver: 2.2.0-3
 src_path: oran-o2-helm
 src_files:
   - oran-o2-helm/files/Makefile
 dl_files:
   pti-o2.tgz:
     topdir: pti-o2
-    url: https://github.com/o-ran-sc/pti-o2/archive/3f92aca5709f0593783a36660d1bc2082a848173.tar.gz
-    md5sum: 09cd4d0d0cff1404c3a40e043c45bb02
+    url: https://github.com/o-ran-sc/pti-o2/archive/1a2fe9a1913cbc81eef73628ddc3e9d40c2ae3ec.tar.gz
+    md5sum: 12a09f67572f241f72f5c434bb9a47fd
 revision:
   dist: $STX_DIST
   GITREVCOUNT:

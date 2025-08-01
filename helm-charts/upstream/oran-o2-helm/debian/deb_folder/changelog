@@ -1,3 +1,9 @@
+oran-o2-helm (2.2.0-3) unstable; urgency=medium
+
+  * Prunes the deleted subclouds and resources
+
+ --  Vineela Pachchipulusu <Vineela.Pachchipulusu@windriver.com>  Tue, 01 AUg 2025 15:58:00 +0000
+
 oran-o2-helm (2.2.0-2) unstable; urgency=medium
 
   * Updates on Region value and optional WRA conf
