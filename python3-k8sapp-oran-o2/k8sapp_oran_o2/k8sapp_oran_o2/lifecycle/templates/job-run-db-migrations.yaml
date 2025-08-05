@@ -1,0 +1,117 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: oran-o2-db-migration
+  namespace: oran-o2
+  labels:
+    app: oran-o2-db-migration
+    component: db-migration
+data:
+  migration.sql: |
+    DO $$
+    BEGIN
+        IF NOT EXISTS (
+            SELECT 1 FROM information_schema.columns
+            WHERE table_name = 'alarmEventRecord'
+            AND column_name = 'alarmClearedTime'
+        ) THEN
+            ALTER TABLE "alarmEventRecord" ADD COLUMN "alarmClearedTime" VARCHAR(255);
+        END IF;
+    END $$;
+
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: oran-o2-db-migration
+  namespace: oran-o2
+  labels:
+    app: oran-o2-db-migration
+    component: db-migration
+spec:
+  template:
+    metadata:
+      labels:
+        app: oran-o2-db-migration
+        component: db-migration
+    spec:
+      restartPolicy: Never
+      containers:
+      - name: kubectl
+        image: bitnami/kubectl:latest
+        command:
+        - /bin/sh
+        - -c
+        - |
+          # Wait for postgres to be ready
+          echo "Waiting for postgres to be ready..."
+          until kubectl -n oran-o2 get pods -l app=o2api -o jsonpath='{.items[0].status.containerStatuses[0].ready}' | grep -q "true"; do
+            sleep 2
+          done
+
+          # Get postgres pod name
+          POSTGRES_POD=$(kubectl -n oran-o2 get pods -l app=o2api -o jsonpath='{.items[0].metadata.name}')
+          echo "Running migration on $POSTGRES_POD"
+
+          # Copy migration script to postgres container
+          kubectl -n oran-o2 cp /tmp/migration.sql $POSTGRES_POD:/tmp/migration.sql -c postgres
+
+          # Execute SQL migration using environment variables
+          kubectl -n oran-o2 exec $POSTGRES_POD -c postgres -- bash -c "PGPASSWORD=$POSTGRES_PASSWORD psql -U o2ims -d o2ims -f /tmp/migration.sql"
+
+          echo "Database migration completed successfully"
+        volumeMounts:
+        - name: migration-script
+          mountPath: /tmp/migration.sql
+          subPath: migration.sql
+          readOnly: true
+      volumes:
+      - name: migration-script
+        configMap:
+          name: oran-o2-db-migration
+      serviceAccountName: oran-o2-db-migration-sa
+  backoffLimit: 2
+
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: oran-o2-db-migration-sa
+  namespace: oran-o2
+  labels:
+    app: oran-o2-db-migration
+    component: db-migration
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: oran-o2-db-migration-role
+  namespace: oran-o2
+  labels:
+    app: oran-o2-db-migration
+    component: db-migration
+rules:
+- apiGroups: [""]
+  resources: ["pods"]
+  verbs: ["get", "list", "watch"]
+- apiGroups: [""]
+  resources: ["pods/exec"]
+  verbs: ["create"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: oran-o2-db-migration-rolebinding
+  namespace: oran-o2
+  labels:
+    app: oran-o2-db-migration
+    component: db-migration
+subjects:
+- kind: ServiceAccount
+  name: oran-o2-db-migration-sa
+  namespace: oran-o2
+roleRef:
+  kind: Role
+  name: oran-o2-db-migration-role
+  apiGroup: rbac.authorization.k8s.io
