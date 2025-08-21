@@ -39,7 +39,7 @@ spec:
       restartPolicy: Never
       containers:
       - name: kubectl
-        image: bitnami/kubectl:latest
+        image: docker.io/bitnamilegacy/kubectl:1.29
         command:
         - /bin/sh
         - -c
