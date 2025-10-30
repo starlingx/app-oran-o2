@@ -15,8 +15,8 @@ behavior:
 
 dependent_apps:
   - - name: platform-integ-apps
-      version: 25\.09-\d+
+      version: (2[5-7]\.\d+|[1-12]\d+\.\d+)-\d+
       action: apply
     - name: rook-ceph
-      version: 25\.09-\d+
+      version: (2[5-7]\.\d+|[1-12]\d+\.\d+)-\d+
       action: apply
