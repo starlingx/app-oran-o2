@@ -13,9 +13,7 @@ export APP_FOLDER = $(ROOT)/usr/lib/helm
 	dh $@
 
 override_dh_auto_build:
-	mkdir -p oran-o2
-	# Extract oran-o2 chart
-	tar -C oran-o2 --strip-components 2 -xvf pti-o2.tgz pti-o2/charts
+	cp -r charts oran-o2
 	make CHART_VERSION=$(CHART_VERSION) oran-o2
 	ls -alR
 
