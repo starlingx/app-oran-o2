@@ -1,3 +1,9 @@
+oran-o2-helm (2.2.1-1) unstable; urgency=medium
+
+  * New upstream release 2.2.1-1
+
+ -- gdinizcr <gabriel.DinizCremel@windriver.com>  Thu, 27 Nov 2025 15:01:15 +0000
+
 oran-o2-helm (2.2.0-4) unstable; urgency=medium
 
   * Prunes the deleted respools,resources and alarms
