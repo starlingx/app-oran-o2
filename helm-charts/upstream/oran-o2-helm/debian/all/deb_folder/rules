@@ -2,7 +2,7 @@
 export DH_VERBOSE = 1
 
 export DEB_VERSION = $(shell dpkg-parsechangelog | egrep '^Version:' | cut -f 2 -d ' ')
-export PATCH_VERSION = $(shell echo $(DEB_VERSION) | cut -f 4 -d '.')
+export PATCH_VERSION = $(shell echo $(DEB_VERSION) | cut -f 2 -d '-')
 export CHART_BASE_VERSION = $(shell echo $(DEB_VERSION) | sed 's/-/./' | cut -d '.' -f 1-3)
 export CHART_VERSION = v$(CHART_BASE_VERSION)+STX.$(PATCH_VERSION)
 
@@ -13,9 +13,7 @@ export APP_FOLDER = $(ROOT)/usr/lib/helm
 	dh $@
 
 override_dh_auto_build:
-	mkdir -p oran-o2
-	# Extract oran-o2 chart
-	tar -C oran-o2 --strip-components 2 -xvf pti-o2.tgz pti-o2/charts
+	cp -r charts oran-o2
 	make CHART_VERSION=$(CHART_VERSION) oran-o2
 	ls -alR
 

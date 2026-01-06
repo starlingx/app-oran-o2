@@ -1,0 +1,42 @@
+oran-o2-helm (2.2.1-1) unstable; urgency=medium
+
+  * New upstream release 2.2.1-1
+
+ -- gdinizcr <gabriel.DinizCremel@windriver.com>  Thu, 27 Nov 2025 15:01:15 +0000
+
+oran-o2-helm (2.2.0-4) unstable; urgency=medium
+
+  * Prunes the deleted respools,resources and alarms
+
+ --  Vineela Pachchipulusu <Vineela.Pachchipulusu@windriver.com>  Tue, 18 AUg 2025 15:27:00 +0000
+
+
+oran-o2-helm (2.2.0-3) unstable; urgency=medium
+
+  * Prunes the deleted subclouds and resources
+
+ --  Vineela Pachchipulusu <Vineela.Pachchipulusu@windriver.com>  Tue, 01 AUg 2025 15:58:00 +0000
+
+oran-o2-helm (2.2.0-2) unstable; urgency=medium
+
+  * Updates on Region value and optional WRA conf
+
+ --  Vineela Pachchipulusu <Vineela.Pachchipulusu@windriver.com>  Tue, 15 Jul 2025 20:50:00 +0000
+
+oran-o2-helm (2.2.0-1) unstable; urgency=medium
+
+  * Security Updates and IPV6 URL Updates
+
+ --  Vineela Pachchipulusu <Vineela.Pachchipulusu@windriver.com>  Mon, 9 Jul 2025 18:10:00 +0000
+
+oran-o2-helm (2.0.4-2) unstable; urgency=medium
+
+  * Deployment strategy type update
+
+ --  Jon Zhang <rong.zhang@windriver.com>  Mon, 18 Nov 2024 09:40:00 +0000
+
+oran-o2-helm (2.0.4-1) unstable; urgency=medium
+
+  * ORAN release J
+
+ --  Joshua Kraitberg  <joshua.kraitberg@windriver.com>  Tue, 9 Jul 2024 12:13:14 +0000
