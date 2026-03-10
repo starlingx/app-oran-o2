@@ -15,6 +15,7 @@ from oslo_log import log as logging
 from sysinv.common import constants
 from sysinv.common import exception
 from sysinv.helm import lifecycle_base as base
+from sysinv.helm.lifecycle_constants import LifecycleConstants
 
 
 LOG = logging.getLogger(__name__)
@@ -41,17 +42,17 @@ class OranO2AppLifecycleOperator(base.AppLifecycleOperator):
 
         """
         # Manifest request
-        if hook_info.lifecycle_type == constants.APP_LIFECYCLE_TYPE_MANIFEST:
+        if hook_info.lifecycle_type == LifecycleConstants.APP_LIFECYCLE_TYPE_MANIFEST:
             LOG.debug(f"Executing app_lifecycle_actions for {app.name} app")
             # Pre Apply Request
             if (hook_info.operation == constants.APP_APPLY_OP
-                    and hook_info.relative_timing == constants.APP_LIFECYCLE_TIMING_PRE):
+                    and hook_info.relative_timing == LifecycleConstants.APP_LIFECYCLE_TIMING_PRE):
                 LOG.debug(f"Pre Update Request {hook_info.lifecycle_type}")
                 return self._run_db_migration(context, conductor_obj, app_op, app)
 
             # Post Apply Request
             if (hook_info.operation == constants.APP_APPLY_OP
-                    and hook_info.relative_timing == constants.APP_LIFECYCLE_TIMING_POST):
+                    and hook_info.relative_timing == LifecycleConstants.APP_LIFECYCLE_TIMING_POST):
                 LOG.debug(f"Post Apply Request {hook_info.lifecycle_type}")
                 return self._cleanup_migration_resources(context, conductor_obj, app_op, app)
 
