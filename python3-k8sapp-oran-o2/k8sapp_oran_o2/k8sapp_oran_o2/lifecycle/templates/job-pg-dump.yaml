@@ -1,0 +1,76 @@
+# Kubernetes Job to run pg_dump before a postgres major version change.
+# Created by the lifecycle plugin (lifecycle_oran_o2.py) during pre-apply
+# or pre-downgrade hooks. The dump is written to the PVC so it persists
+# across pod restarts and is available for the new container to restore from.
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: oran-o2-pg-dump
+  namespace: oran-o2
+  labels:
+    app: oran-o2-pg-dump
+spec:
+  template:
+    metadata:
+      labels:
+        app: oran-o2-pg-dump
+    spec:
+      restartPolicy: Never
+      containers:
+      - name: kubectl
+        image: docker.io/bitnamilegacy/kubectl:1.33.4
+        command:
+        - /bin/sh
+        - -c
+        - |
+          echo "Waiting for postgres to be ready..."
+          until kubectl -n oran-o2 get pods -l app=o2api -o jsonpath='{.items[0].status.containerStatuses[0].ready}' | grep -q "true"; do
+            sleep 2
+          done
+          POSTGRES_POD=$(kubectl -n oran-o2 get pods -l app=o2api -o jsonpath='{.items[0].metadata.name}')
+          echo "Running pg_dump on $POSTGRES_POD"
+          kubectl -n oran-o2 exec $POSTGRES_POD -c postgres -- \
+            bash -c "pg_dump --clean -U o2ims o2ims > /var/lib/postgresql/data/pg_upgrade_dump.sql"
+          echo "Dump completed"
+      serviceAccountName: oran-o2-pg-dump-sa
+  backoffLimit: 2
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: oran-o2-pg-dump-sa
+  namespace: oran-o2
+  labels:
+    app: oran-o2-pg-dump
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: oran-o2-pg-dump-role
+  namespace: oran-o2
+  labels:
+    app: oran-o2-pg-dump
+rules:
+- apiGroups: [""]
+  resources: ["pods"]
+  verbs: ["get", "list"]
+- apiGroups: [""]
+  resources: ["pods/exec"]
+  verbs: ["create"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: oran-o2-pg-dump-rolebinding
+  namespace: oran-o2
+  labels:
+    app: oran-o2-pg-dump
+subjects:
+- kind: ServiceAccount
+  name: oran-o2-pg-dump-sa
+  namespace: oran-o2
+roleRef:
+  kind: Role
+  name: oran-o2-pg-dump-role
+  apiGroup: rbac.authorization.k8s.io
