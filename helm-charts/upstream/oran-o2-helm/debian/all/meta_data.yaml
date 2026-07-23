@@ -7,8 +7,8 @@ src_files:
 dl_files:
   pti-o2.tgz:
     topdir: oran-o2-helm-2.3.0
-    url: https://github.com/o-ran-sc/pti-o2/archive/bcbc9340496ffa2c09cabb37f53758b9eae0e055.tar.gz
-    sha256sum: c537a209d464e937f628f55e7227c00246fa2be7e6b58d595baeb5ec4ddfe764
+    url: https://github.com/o-ran-sc/pti-o2/archive/refs/tags/2.3.0.tar.gz
+    sha256sum: 0cc97dc4b85e5c615ba40c62763d3df8a8d2a0ffec6ae969acdb94a2474c2861
 revision:
   dist: $STX_DIST
   GITREVCOUNT:
