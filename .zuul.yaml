@@ -7,6 +7,22 @@
         - k8sapp-oran-o2-tox-pylint
         - k8sapp-oran-o2-tox-flake8
         - k8sapp-oran-o2-tox-metadata
+        - k8sapp-oran-o2-tox-coverage:
+            voting: false
+        - k8sapp-oran-o2-tox-bandit:
+            voting: false
+        - k8sapp-oran-o2-tox-py313:
+            voting: false
+        - k8sapp-oran-o2-tox-pylint-trixie:
+            voting: false
+        - k8sapp-oran-o2-tox-flake8-trixie:
+            voting: false
+        - k8sapp-oran-o2-tox-metadata-trixie:
+            voting: false
+        - k8sapp-oran-o2-tox-coverage-trixie:
+            voting: false
+        - k8sapp-oran-o2-tox-bandit-trixie:
+            voting: false
     gate:
       jobs:
         - openstack-tox-linters
@@ -88,6 +104,44 @@
       tox_envlist: flake8
       tox_extra_args: -c python3-k8sapp-oran-o2/k8sapp_oran_o2/tox.ini
       tox_constraints_file: '{{ ansible_user_dir }}/src/opendev.org/starlingx/root/build-tools/requirements/debian/upper-constraints.txt'
+
+- job:
+    name: k8sapp-oran-o2-tox-coverage
+    parent: tox
+    description: |
+      Run coverage analysis for k8sapp-oran-o2
+    nodeset: debian-bullseye
+    required-projects:
+      - starlingx/config
+      - starlingx/fault
+      - starlingx/utilities
+      - starlingx/root
+    files:
+      - python3-k8sapp-oran-o2/*
+    vars:
+      tox_envlist: coverage
+      tox_extra_args: -c python3-k8sapp-oran-o2/k8sapp_oran_o2/tox.ini
+      tox_constraints_file: '{{ ansible_user_dir }}/src/opendev.org/starlingx/root/build-tools/requirements/debian/upper-constraints.txt'
+    post-run: python3-k8sapp-oran-o2/k8sapp_oran_o2/k8sapp_oran_o2/tests/playbooks/upload-coverage-reports.yaml
+
+- job:
+    name: k8sapp-oran-o2-tox-bandit
+    parent: tox
+    description: |
+      Run bandit security analysis for k8sapp-oran-o2
+    nodeset: debian-bullseye
+    required-projects:
+      - starlingx/config
+      - starlingx/fault
+      - starlingx/utilities
+      - starlingx/root
+    files:
+      - python3-k8sapp-oran-o2/*
+    vars:
+      tox_envlist: bandit
+      tox_extra_args: -c python3-k8sapp-oran-o2/k8sapp_oran_o2/tox.ini
+      tox_constraints_file: '{{ ansible_user_dir }}/src/opendev.org/starlingx/root/build-tools/requirements/debian/upper-constraints.txt'
+    post-run: python3-k8sapp-oran-o2/k8sapp_oran_o2/k8sapp_oran_o2/tests/playbooks/upload-bandit-reports.yaml
 
 - job:
     name: stx-app-oran-o2-upload-git-mirror
@@ -180,3 +234,111 @@
           sPst0yZz5kUN0o94JibEA6tqVPs1OifgpqYtlpdw8oN5tTwqzngwpMXmp6H3n2OdewkVz
           FfWIDFhKlkC4EQ+8z2ZhM5RT2LuxDT9Gv7ZmPKzCUrrWWr/gDGAN3N75NEwRU7RNbhlyy
           QeHyLUsa//KeXA6fARYLUp1m/nmHKTj//GBmHOCjeBsGJj7alyKlO8t2u1o1MM=
+
+- job:
+    name: k8sapp-oran-o2-tox-py313
+    parent: tox
+    description: |
+      Run py313 unit tests for k8sapp-oran-o2 (Trixie)
+    nodeset: debian-trixie-8GB
+    required-projects:
+      - starlingx/config
+      - starlingx/fault
+      - starlingx/utilities
+      - starlingx/root
+    files:
+      - python3-k8sapp-oran-o2/*
+    vars:
+      tox_envlist: py313
+      tox_extra_args: -c python3-k8sapp-oran-o2/k8sapp_oran_o2/tox.ini
+      tox_constraints_file: '{{ ansible_user_dir }}/src/opendev.org/starlingx/root/build-tools/requirements/debian/trixie/upper-constraints.txt'
+
+- job:
+    name: k8sapp-oran-o2-tox-pylint-trixie
+    parent: tox
+    description: |
+      Run pylint test for k8sapp-oran-o2 (Trixie)
+    nodeset: debian-trixie-8GB
+    required-projects:
+      - starlingx/config
+      - starlingx/fault
+      - starlingx/utilities
+      - starlingx/root
+    files:
+      - python3-k8sapp-oran-o2/*
+    vars:
+      tox_envlist: pylint-trixie
+      tox_extra_args: -c python3-k8sapp-oran-o2/k8sapp_oran_o2/tox.ini
+      tox_constraints_file: '{{ ansible_user_dir }}/src/opendev.org/starlingx/root/build-tools/requirements/debian/trixie/upper-constraints.txt'
+
+- job:
+    name: k8sapp-oran-o2-tox-flake8-trixie
+    parent: tox
+    description: |
+      Run flake8 test for k8sapp-oran-o2 (Trixie)
+    nodeset: debian-trixie-8GB
+    required-projects:
+      - starlingx/config
+      - starlingx/fault
+      - starlingx/utilities
+      - starlingx/root
+    files:
+      - python3-k8sapp-oran-o2/*
+    vars:
+      tox_envlist: flake8-trixie
+      tox_extra_args: -c python3-k8sapp-oran-o2/k8sapp_oran_o2/tox.ini
+      tox_constraints_file: '{{ ansible_user_dir }}/src/opendev.org/starlingx/root/build-tools/requirements/debian/trixie/upper-constraints.txt'
+
+- job:
+    name: k8sapp-oran-o2-tox-metadata-trixie
+    parent: tox
+    description: |
+      Run metadata test for k8sapp-oran-o2 (Trixie)
+    nodeset: debian-trixie-8GB
+    required-projects:
+      - starlingx/config
+      - starlingx/fault
+      - starlingx/utilities
+      - starlingx/root
+    vars:
+      tox_envlist: metadata-trixie
+      tox_extra_args: -c python3-k8sapp-oran-o2/k8sapp_oran_o2/tox.ini
+      tox_constraints_file: '{{ ansible_user_dir }}/src/opendev.org/starlingx/root/build-tools/requirements/debian/trixie/upper-constraints.txt'
+
+- job:
+    name: k8sapp-oran-o2-tox-coverage-trixie
+    parent: tox
+    description: |
+      Run coverage analysis for k8sapp-oran-o2 (Trixie)
+    nodeset: debian-trixie-8GB
+    required-projects:
+      - starlingx/config
+      - starlingx/fault
+      - starlingx/utilities
+      - starlingx/root
+    files:
+      - python3-k8sapp-oran-o2/*
+    vars:
+      tox_envlist: coverage-trixie
+      tox_extra_args: -c python3-k8sapp-oran-o2/k8sapp_oran_o2/tox.ini
+      tox_constraints_file: '{{ ansible_user_dir }}/src/opendev.org/starlingx/root/build-tools/requirements/debian/trixie/upper-constraints.txt'
+    post-run: python3-k8sapp-oran-o2/k8sapp_oran_o2/k8sapp_oran_o2/tests/playbooks/upload-coverage-reports.yaml
+
+- job:
+    name: k8sapp-oran-o2-tox-bandit-trixie
+    parent: tox
+    description: |
+      Run bandit security analysis for k8sapp-oran-o2 (Trixie)
+    nodeset: debian-trixie-8GB
+    required-projects:
+      - starlingx/config
+      - starlingx/fault
+      - starlingx/utilities
+      - starlingx/root
+    files:
+      - python3-k8sapp-oran-o2/*
+    vars:
+      tox_envlist: bandit-trixie
+      tox_extra_args: -c python3-k8sapp-oran-o2/k8sapp_oran_o2/tox.ini
+      tox_constraints_file: '{{ ansible_user_dir }}/src/opendev.org/starlingx/root/build-tools/requirements/debian/trixie/upper-constraints.txt'
+    post-run: python3-k8sapp-oran-o2/k8sapp_oran_o2/k8sapp_oran_o2/tests/playbooks/upload-bandit-reports.yaml
